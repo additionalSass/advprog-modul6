@@ -35,3 +35,9 @@ Setelah menentukan status_line dan filename yang sesuai berdasarkan request_line
 Sekarang, server kita akan menunjukkan konten 404.html jika bukan http://127.0.0.1:7878 .
 
 ![Commit 3 screen capture](/assets/images/commit3.PNG)
+
+# Commit 4 Reflection
+
+Ketika request untuk url /sleep diterima, server memanggil thread::sleep(Duration::from_secs(10)) yang menyebabkan thread yang sedang menangani request tersebut tidur selama 10 detik sebelum melanjutkan pemrosesan dan mengirimkan respons.
+
+Karena server berjalan pada hanya satu thread, saat server menerima request "GET /sleep HTTP/1.1", thread tidur selama 10 detik sebelum mengirimkan respons. Selama sepuluh detik tersebut, thread server akan diblokir untuk request lain. Hal ini menyebabkan request lain, seperti "GET / HTTP/1.1" pada jendela browser kedua, harus menunggu hingga request "/sleep" selesai diproses. Masalah ini akan semakin buruk jika banyak pengguna mencoba mengakses server secara bersamaan karena setiap request  memakan waktu lama dan memblokir satu thread server dan menyebabkan request lain tertunda atau bahkan timeout.
