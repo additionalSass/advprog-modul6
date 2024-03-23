@@ -23,3 +23,15 @@ Konten untuk HTTP digunakan dengan format! makro untuk memformat string (mirip d
 Terakhir, write_all membangun respons HTTP ke koneksi TCP. Metode as_bytes melakukan konversi string ke bytes agar dapat ditulis ke stream. Lalu, klien bisa melihat isi hello.html muncul di browser nya saat 127.0.0.1:7878.
 
 ![Commit 2 screen capture](/assets/images/commit2.PNG)
+
+# Commit 3 Reflection 
+
+Sebelumnya, dengan mengikuti bab 20 buku Rust tersebut, terdapat blok if-else yang besar dengan logika serupa untuk menangani dua kasus: jika request_line sama dengan "GET / HTTP/1.1" dan jika bukan. Dalam kedua kasus tersebut, kode untuk membaca isi file HTML, menghitung panjang contents, dan membuat respons HTTP berformat hampir sama,  berbeda hanya pada nilai variabel status_line dan file_name yang digunakan.
+
+Untuk menghindari duplikasi, dilakukan refactoring untuk blok if-else yang besar sehingga menjadi satu ekspresi if ringkas untuk (status_line, filename) yang bernilai ("HTTP/1.1 200 OK", "hello.html") jika request_line sama dengan "GET / HTTP/1.1" dan ("HTTP/1.1 404 NOT FOUND", "404.html") jika tidak.
+
+Setelah menentukan status_line dan filename yang sesuai berdasarkan request_line, logika untuk membaca file, menghitung panjang contents, dan memformat dan menuliskan respons HTTP dalam bytes ke stream tetap sama seperti sebelumnya menurut buku. Kode tersebut dalam proses refactoring dipindahkan ke luar blok if-else karena berlaku untuk kedua kasus.
+
+Sekarang, server kita akan menunjukkan konten 404.html jika bukan http://127.0.0.1:7878 .
+
+![Commit 3 screen capture](/assets/images/commit3.PNG)
